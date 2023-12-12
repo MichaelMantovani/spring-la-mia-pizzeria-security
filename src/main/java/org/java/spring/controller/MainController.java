@@ -7,6 +7,7 @@ import org.java.spring.db.pojo.Pizza;
 import org.java.spring.db.serv.IngredienteService;
 import org.java.spring.db.serv.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,12 +29,15 @@ public class MainController {
 	private IngredienteService ingredienteService;
 
 	@GetMapping
-	public String getPizzaIndex(Model model, @RequestParam(name = "searchValue", required = false) String searchValue) {
+	public String getPizzaIndex(Model model, @RequestParam(name = "searchValue", required = false) String searchValue , Authentication authentication) {
 
 		List<Pizza> pizze = searchValue == null ? pizzaService.findAll() : pizzaService.findByName(searchValue);
 
 		model.addAttribute("searchValue", searchValue);
 		model.addAttribute("pizze", pizze);
+		if(authentication != null) {
+			model.addAttribute("username", authentication.getName());
+		}
 
 		return "home";
 	}
