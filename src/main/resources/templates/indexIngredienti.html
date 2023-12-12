@@ -22,7 +22,7 @@
 					<tr th:each="ingrediente : ${ingredienti}">
 						<td>[[${ingrediente.id}]]</td>
 						<td>[[${ingrediente.name}]]</td>
-						<td>
+						<td sec:authorize="hasAnyAuthority('ADMIN', 'GOD')">
 							<form th:action="@{/ingredienti/delete/{id} (id=*{ingrediente.id})}" method="POST">
 								<input class="btn btn-danger btn-sm" type="submit" value="Elimina">
 							</form>
@@ -31,7 +31,7 @@
 				</tbody>
 			</table>
 			<div class="d-flex gap-3 align-items-start">
-				<a href="/ingredienti/create" class="btn btn-primary btn-sm">Aggiungi ingrediente</a>
+				<a sec:authorize="hasAnyAuthority('ADMIN', 'GOD')" href="/ingredienti/create" class="btn btn-primary btn-sm">Aggiungi ingrediente</a>
 				<a th:replace="returnButton :: button('/', 'Return')"></a>
 			</div>
 		</div>
