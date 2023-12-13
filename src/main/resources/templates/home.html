@@ -17,7 +17,7 @@
 							name="searchValue">
 						<button class="btn btn-outline-success" type="submit">Search</button>
 					</form>
-					<div sec:authorize="hasAnyAuthority('ADMIN','GOD')">
+					<div sec:authorize="hasAnyAuthority('ADMIN')">
 						<a href="/create" class="btn btn-primary">Crea pizza</a>
 					</div>
 					<a href="/ingredienti" class="btn btn-secondary">I nostri ingredienti</a>
@@ -51,7 +51,7 @@
 						</td>
 						<td>[[${pizza.prezzo}]] €</td>
 						<td><a th:href="@{pizza/{pizzaId}(pizzaId=${pizza.id})}" class="btn btn-primary">Info</a>
-							<a sec:authorize="hasAnyAuthority('ADMIN', 'GOD')"
+							<a sec:authorize="hasAnyAuthority('ADMIN')"
 								th:href="@{pizza/edit/{pizzaId}(pizzaId=${pizza.id})}"
 								class="btn btn-warning ms-1">Edit</a>
 						</td>

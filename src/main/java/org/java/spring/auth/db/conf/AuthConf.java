@@ -13,17 +13,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class AuthConf {
 
-	  @Bean
-	  SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-			  http.csrf().disable().authorizeHttpRequests()
-			  .requestMatchers("/user/**").hasAnyAuthority("USER","ADMIN", "GOD")
-			  .requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "GOD")
-			  .requestMatchers("/god/**").hasAnyAuthority("GOD")
-			  .requestMatchers("/**").permitAll()
-			  .and().formLogin()
-			  .and().logout();
-			  return http.build();
-	  }
+	@Bean
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf().disable().authorizeHttpRequests()
+		.requestMatchers("/*/create/**", "/*/edit/**", "/*/delete/**", "/*/*/*/create")
+				.hasAuthority("ADMIN")
+				.requestMatchers("/**")
+				.hasAnyAuthority("USER", "ADMIN")
+				.and().formLogin()
+				.and()				.logout();
+		return http.build();
+	}
 
 	@Bean
 	UserDetailsService userDetailsService() {
